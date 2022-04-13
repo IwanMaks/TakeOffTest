@@ -1,0 +1,1 @@
+export const SIGNED_USER = 'SIGNED_USER';
