@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux'
-import { SIGNED_USER } from '../types';
+import { ADD_NEW_USER, SIGNED_USER } from '../types';
 
 interface UserState {
     id: number,

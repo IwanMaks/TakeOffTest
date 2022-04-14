@@ -1,9 +1,9 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "login": "IwanMak",
-            "password": "qwerty"
-        }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "login": "IwanMak",
+      "password": "qwerty"
+    }
+  ]
 }

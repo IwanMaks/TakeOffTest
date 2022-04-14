@@ -8,6 +8,7 @@ import {
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { ContactPage } from './pages/ContactPage/ContactPage';
+import { PrivateRoutes } from './components/PrivateRoutes';
 
 export const App = (): JSX.Element => {
     return (
@@ -15,7 +16,13 @@ export const App = (): JSX.Element => {
             <BrowserRouter>
                 <Routes>
                     <Route path='/' element={<AuthPage/>} />
-                    <Route path='/contacts' element={<ContactPage/>} />
+                    <Route path='/contacts' 
+                        element={
+                            <PrivateRoutes>
+                                <ContactPage/>
+                            </PrivateRoutes>
+                        } 
+                    />
                 </Routes>
             </BrowserRouter>
         </Provider>

@@ -2,10 +2,12 @@ import classNames from "classnames";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import { RootState } from "../../store";
-import { signedUser } from "../../store/actions/users";
+import { addNewUser, signedUser } from "../../store/actions/users";
 let Logo = "https://habrastorage.org/r/w1560/webt/ew/zv/fb/ewzvfbkgyhwhbczbwl3ew5wyyqs.png";
 import './AuthPage.sass'
+import 'react-toastify/dist/ReactToastify.css';
 
 export const AuthPage = (): JSX.Element => {
   const [authMode, setAuthMode] = React.useState<'signin' | 'signup'>('signin')
@@ -33,25 +35,45 @@ export const AuthPage = (): JSX.Element => {
   }
 
   const handleAuthClick = async (e: React.MouseEvent) => {
-    let user = {}
+    let mark = 0
     e.preventDefault()
+    const response = await fetch('http://localhost:3000/users')
+    const data = await response.json()
     if (authMode === 'signin') {
-        const response = await fetch('http://localhost:3000/users')
-        const data = await response.json()
-
         data.forEach((elem:UserObj) => {
           if (elem.login === login && elem.password !== password) {
-            console.log('Пароль не совпадает');
+            toast.error('Пароль не совпадает')
+            mark = 1
           } else if (elem.login === login && elem.password === password) {
-            user = elem
             dispatch(signedUser(elem))
             navigation('/contacts')
+            mark = 1
           }
         })
         
-        if (Object.keys(user).length === 0) {
-          console.log('Пользоватлель не найден');
+        if (!mark) {
+          toast.warning('Пользоватлель не найден')
         }
+    } else if (authMode === 'signup') {
+      if (password === confirmPassword) {
+        data.forEach((elem:UserObj) => {
+          if (elem.login === login) {
+            toast.warning('Пользователь с таким логином уже существует')
+            mark = 1
+          }
+        })
+        if (mark === 0) {
+          const newUser = {
+            login: login,
+            password: password,
+            id: data.length + 1
+          }
+
+          dispatch(addNewUser(newUser))
+        }
+      } else {
+        toast.error('Пароли не совпадают')
+      }
     }
   }
   
@@ -75,7 +97,7 @@ export const AuthPage = (): JSX.Element => {
             onChange={(e) => setLogin(e.target.value)}
           />
 
-          <label className="auth-input-label" htmlFor="password">Пароль</label>
+          <label className="auth-input-label" htmlFor="password" >Пароль</label>
           <input 
             autoComplete="off" 
             className="auth-input" 
@@ -106,6 +128,7 @@ export const AuthPage = (): JSX.Element => {
           <button 
             className="auth-button"
             onClick={handleAuthClick}
+            disabled={!login || !password}
           >
             {authMode === 'signin' ? 'Вход' : 'Зарегестрироваться'}
           </button>
@@ -117,6 +140,7 @@ export const AuthPage = (): JSX.Element => {
             {authMode === 'signin' ? 'Зарегистрироваться': 'Войти'}
           </div>
       </form>
+      <ToastContainer />
     </div>
   )
 }

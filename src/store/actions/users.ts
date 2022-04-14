@@ -1,5 +1,6 @@
+import { toast } from "react-toastify"
 import { AppDispatch } from ".."
-import { SIGNED_USER } from "../types"
+import { ADD_NEW_USER, SIGNED_USER } from "../types"
 
 interface UserObj {
     id: number,
@@ -12,4 +13,23 @@ export const signedUser = (user:UserObj) => async (dispatch:AppDispatch) => {
         type: SIGNED_USER,
         payload: user
     })
+}
+
+export const addNewUser = (user:UserObj) => async (dispatch:AppDispatch) => {
+    try {
+        const response = await fetch('http://localhost:3000/users', {
+            method: 'POST',
+            body: JSON.stringify(user),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        dispatch({
+            type: SIGNED_USER,
+            payload: user
+        })
+    } catch {
+        toast.error('Что-то пошло не так')
+    }
 }
