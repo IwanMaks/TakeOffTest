@@ -7,14 +7,21 @@ import Delete from '../../../public/delete.svg';
 // @ts-expect-error
 import Edit from '../../../public/edit.svg';
 
-export const ContactElem = ():JSX.Element => {
+interface ContactType {
+    name: string,
+    number: string
+}
+
+export const ContactElem = ({name, number}: ContactType):JSX.Element => {
+
+
     return (
         <div className="contact-elem-container">
             <div className="info-container">
                 <Avatar width="50" color="#fffff" />
                 <div className="name-number-container">
-                    <div className="name">Иван</div>
-                    <div className="number">+7 (920) 753-48-23</div>
+                    <div className="name">{name}</div>
+                    <div className="number">{number}</div>
                 </div>
             </div>
             

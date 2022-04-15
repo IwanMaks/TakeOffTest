@@ -14,9 +14,6 @@ interface UserObj {
 
 export const PrivateRoutes = ({children}: PrivateRoutesProps): JSX.Element => {
     const login = useSelector<RootState>(state => state.users.login)
-
-    console.log(login);
-    
     
     return login ? children : <Navigate to="/" replace />;
 }

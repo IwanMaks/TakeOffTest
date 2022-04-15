@@ -5,5 +5,19 @@
       "login": "IwanMak",
       "password": "qwerty"
     }
-  ]
+  ],
+  "contacts": {
+    "1": [
+        {
+            "name": "Иван",
+            "number": "+7 (920) 753-48-23",
+            "id": 1
+        },
+        {
+            "name": "Настя",
+            "number": "+7 (919) 753-22-33",
+            "id": 2
+        }
+    ]
+}
 }
