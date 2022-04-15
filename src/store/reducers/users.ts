@@ -1,17 +1,13 @@
+import { IUserAction, IUserState } from '@src/types/user';
 import { AnyAction } from 'redux'
-import { ADD_NEW_USER, SIGNED_USER } from '../types';
+import { SIGNED_USER } from '../types';
 
-interface UserState {
-    id: number,
-    login: string
-}
-
-const initialState: UserState = {
+const initialState: IUserState = {
     id: 0,
     login: ''
 }
 
-export const usersReducer = (state = initialState, action: AnyAction) => {
+export const usersReducer = (state = initialState, action: IUserAction):IUserState => {
     switch (action.type) {
         case SIGNED_USER:
             return {

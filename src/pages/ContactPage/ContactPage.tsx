@@ -5,7 +5,7 @@ import { AppButton } from "../../components/AppButton/AppButton";
 import { AppInput } from "../../components/AppInput/AppInput";
 import { ContactElem } from "../../components/ContactElem/ContactElem";
 import { NavBar } from "../../components/NavBar/NavBar";
-import { useAppSelector } from "../../hooks";
+import { useAppSelector } from "../../utils/hooks";
 import { RootState } from "../../store";
 import { loadContacts } from "../../store/actions/contacts";
 import './ContactPage.sass'

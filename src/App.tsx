@@ -9,6 +9,8 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { ContactPage } from './pages/ContactPage/ContactPage';
 import { PrivateRoutes } from './components/PrivateRoutes';
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const App = (): JSX.Element => {
     return (
@@ -25,6 +27,7 @@ export const App = (): JSX.Element => {
                     />
                 </Routes>
             </BrowserRouter>
+            <ToastContainer />
         </Provider>
         
     )
