@@ -7,11 +7,6 @@ interface PrivateRoutesProps {
     children: JSX.Element
 }
 
-interface UserObj {
-    id: number,
-    login: string
-}
-
 export const PrivateRoutes = ({children}: PrivateRoutesProps): JSX.Element => {
     const login = useSelector<RootState>(state => state.users.login) || localStorage.getItem('contact-login')
     

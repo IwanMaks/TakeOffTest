@@ -1,27 +1,21 @@
-import { AnyAction } from 'redux'
+import { contactState, IContactsAction } from '@src/types/contacts';
 import { ADD_NEW_NUMBER, LOAD_NUMBER } from '../types';
-
-interface contactState {
-    id: number,
-    name: string,
-    number: string
-}
 
 const initialState: Array<contactState> = []
 
-export const contactsReducer = (state = initialState, action: AnyAction) => {
+export const contactsReducer = (state = initialState, action: IContactsAction):Array<contactState> => {
     switch (action.type) {
         case LOAD_NUMBER:
             return [
                 ...state,
-                action.payload
+                ...action.payload
             ]
         case ADD_NEW_NUMBER:
             return [
                 ...state,
-                {
-                    number: action.payload.number,
-                    name: action.payload.name,
+                {   
+                    number: action.payload[0].number,
+                    name: action.payload[0].name,
                     id: state.length + 1
                 }
             ]

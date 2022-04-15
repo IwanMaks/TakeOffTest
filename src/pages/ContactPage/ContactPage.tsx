@@ -2,15 +2,15 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AddNumberButton } from "../../components/AddNumberButton/AddNumberButton";
 import { AppButton } from "../../components/AppButton/AppButton";
-import { AppInput } from "../../components/AppInput/AppInput";
 import { ContactElem } from "../../components/ContactElem/ContactElem";
 import { NavBar } from "../../components/NavBar/NavBar";
-import { useAppSelector } from "../../utils/hooks";
+import { useAction, useAppSelector } from "../../utils/hooks";
 import { RootState } from "../../store";
 import { loadContacts } from "../../store/actions/contacts";
 import './ContactPage.sass'
 // @ts-expect-error
 import Close from '../../../public/close.svg'
+import { AppInput } from "@src/components/AppInput/AppInput";
 
 interface ContactType {
     name: string,
@@ -18,13 +18,19 @@ interface ContactType {
 }
 
 export const ContactPage = (): JSX.Element => {
-    const dispatch = useDispatch()
-    const userId = useAppSelector(state => state.users.id)
     const contactData = useAppSelector(state => state.contacts)
+    const login = useAppSelector(state => state.users.login) || localStorage.getItem('contact-login')
+    const {loadContacts} = useAction()
+
+    const [name, setName] = React.useState<string>('')
+    const [contact, setContact] = React.useState<string>('')
 
     React.useEffect(() => {
-        dispatch(loadContacts())
+        loadContacts({login})
     }, [])
+
+    console.log(contactData);
+    
 
     return (
         <div className="contact-container">
@@ -35,16 +41,30 @@ export const ContactPage = (): JSX.Element => {
                             <Close width="30" />
                         </div>
                     </div>
-                    <AppInput placeholder="Имя" />
-                    <AppInput placeholder="Телефон" />
+                    <AppInput 
+                        placeholder="Имя" 
+                        type="text"
+                        id="name"
+                        label="Имя контакта"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <AppInput 
+                        placeholder="Телефон" 
+                        type="text"
+                        id="contact"
+                        label="Номер контакта"
+                        value={contact}
+                        onChange={(e) => setContact(e.target.value)}
+                    />
                     <AppButton />
                 </div>
             </div>
             <NavBar />
             <div className="contact-elem-wraper">
                 {
-                    contactData[0] ?
-                    contactData[0].map((elem:ContactType, index:number) => <ContactElem name={elem.name} number={elem.number} key={Math.random()*100 + index} />) :
+                    contactData ?
+                    contactData.map((elem:ContactType, index:number) => <ContactElem name={elem.name} number={elem.number} key={Math.random()*100 + index} />) :
                     <div/>
                 }
                 <AddNumberButton />
