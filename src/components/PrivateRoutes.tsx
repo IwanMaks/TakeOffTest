@@ -13,7 +13,7 @@ interface UserObj {
 }
 
 export const PrivateRoutes = ({children}: PrivateRoutesProps): JSX.Element => {
-    const login = useSelector<RootState>(state => state.users.login)
+    const login = useSelector<RootState>(state => state.users.login) || localStorage.getItem('contact-login')
     
     return login ? children : <Navigate to="/" replace />;
 }

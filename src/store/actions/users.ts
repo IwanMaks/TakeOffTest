@@ -49,6 +49,7 @@ export const addNewUser = ({password, confirmPassword, login, navigation}: Actio
                     type: SIGNED_USER,
                     payload: user
                 })
+                localStorage.setItem('contact-login', login)
                 
                 navigation('/contacts')
             }
@@ -78,6 +79,8 @@ export const signedUser = ({login, password, navigation}: ActionProps) => async 
                     type: SIGNED_USER,
                     payload: user
                 })
+
+                localStorage.setItem('contact-login', login)
                 navigation('/contacts')
                 mark = 1
             }

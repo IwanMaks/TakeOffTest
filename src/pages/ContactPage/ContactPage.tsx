@@ -22,9 +22,6 @@ export const ContactPage = (): JSX.Element => {
     const userId = useAppSelector(state => state.users.id)
     const contactData = useAppSelector(state => state.contacts)
 
-    console.log(contactData[0]);
-    
-
     React.useEffect(() => {
         dispatch(loadContacts())
     }, [])

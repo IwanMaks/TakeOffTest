@@ -13,6 +13,14 @@ export const AuthPage = (): JSX.Element => {
 
   const {signedUser, addNewUser} = useAction()
   const navigation = useNavigate()
+
+  React.useEffect(() => {
+    const login = localStorage.getItem('contact-login')
+
+    if (login) {
+      navigation('/contacts')
+    }
+  }, [])
   
   const handleAuthMode = () => {
     if (authMode === 'signin') {
