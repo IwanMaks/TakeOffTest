@@ -1,10 +1,11 @@
 import { IUserAction, IUserState } from '@src/types/user';
 import { AnyAction } from 'redux'
-import { EXIT_USER, SIGNED_USER } from '../types';
+import { END_LOADING, EXIT_USER, SIGNED_USER, START_LOADING } from '../types';
 
 const initialState: IUserState = {
     id: 0,
-    login: ''
+    login: '',
+    loading: false
 }
 
 export const usersReducer = (state = initialState, action: IUserAction):IUserState => {
@@ -13,12 +14,24 @@ export const usersReducer = (state = initialState, action: IUserAction):IUserSta
             return {
                 ...state,
                 login: action.payload.login,
-                id: action.payload.id
+                id: action.payload.id,
+                loading: false
             };
         case EXIT_USER:
             return {
                 id: 0,
-                login: ''
+                login: '',
+                loading: false
+            }
+        case START_LOADING: 
+            return {
+                ...state,
+                loading: true
+            }
+        case END_LOADING: 
+            return {
+                ...state,
+                loading: false
             }
         default: 
             return state;

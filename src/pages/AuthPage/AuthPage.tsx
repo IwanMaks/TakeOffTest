@@ -3,7 +3,8 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import './AuthPage.sass'
 import { AppInput } from "@src/components/AppInput/AppInput";
-import { useAction } from "@src/utils/hooks";
+import { useAction, useAppSelector } from "@src/utils/hooks";
+import { AppLoading } from "@src/components/AppLoading/AppLoading";
 
 export const AuthPage = (): JSX.Element => {
   const [authMode, setAuthMode] = React.useState<'signin' | 'signup'>('signin')
@@ -11,6 +12,7 @@ export const AuthPage = (): JSX.Element => {
   const [password, setPassword] = React.useState<string>('')
   const [confirmPassword, setConfirmPassword] = React.useState<string>('')
 
+  const loading = useAppSelector(state => state.users.loading)
   const {signedUser, addNewUser} = useAction()
   const navigation = useNavigate()
 
@@ -86,7 +88,11 @@ export const AuthPage = (): JSX.Element => {
             onClick={handleAuthClick}
             disabled={!login || !password}
           >
-            {authMode === 'signin' ? 'Вход' : 'Зарегестрироваться'}
+            {
+              loading ?
+              <AppLoading size="small" /> :
+              authMode === 'signin' ? 'Вход' : 'Зарегестрироваться'
+            }
           </button>
 
           <div 

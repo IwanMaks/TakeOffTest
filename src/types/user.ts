@@ -1,6 +1,7 @@
 export interface IUserState {
     login: string,
-    id: number
+    id: number,
+    loading?: boolean
 }
 
 export interface IUserAction {

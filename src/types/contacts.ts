@@ -4,6 +4,11 @@ export interface contactState {
     number: string
 }
 
+export interface FullContactState {
+    loading: boolean,
+    contactsData: contactState[]
+}
+
 export interface IContactsAction {
     type: string,
     payload?: contactState[]

@@ -1,7 +1,7 @@
 import { IContactsAction } from "@src/types/contacts";
 import { Dispatch } from "react";
 import { toast } from "react-toastify";
-import { ADD_NEW_NUMBER, LOAD_NUMBER } from "../types";
+import { ADD_NEW_NUMBER, END_LOADING, LOAD_NUMBER, START_LOADING } from "../types";
 
 interface NumberType {
     name: string,
@@ -23,6 +23,7 @@ interface DeleteActionType {
 export const loadContacts = ({login}: {login: string}) => async (dispatch: Dispatch<IContactsAction>) => {
     const lowerLogin = login.toLocaleLowerCase()
     try {
+        dispatch({type: START_LOADING})
         const response = await fetch(`http://localhost:3000/${lowerLogin}`)
         const data = await response.json()
 
@@ -31,6 +32,7 @@ export const loadContacts = ({login}: {login: string}) => async (dispatch: Dispa
             payload: data
         })
     } catch {
+        dispatch({type: END_LOADING})
         toast.warning('Что-то пошло не так')
     }
 }
@@ -43,6 +45,7 @@ export const addContact = ({id, name, number, login}: FullNumberProps) => async 
     }
     const lowerLogin = login.toLocaleLowerCase()
     try {
+        dispatch({type: START_LOADING})
         await fetch(`http://localhost:3000/${lowerLogin}`, {
             method: 'POST',
             body: JSON.stringify(newNumber),
@@ -55,12 +58,14 @@ export const addContact = ({id, name, number, login}: FullNumberProps) => async 
             payload: [newNumber]
         })
     } catch {
+        dispatch({type: END_LOADING})
         toast.warning('Что-то пошло не так')
     }
 }
 
 export const deleteContact = ({id, login}:DeleteActionType) => async (dispatch: Dispatch<IContactsAction>) => {    
     try {
+        dispatch({type: START_LOADING})
         await fetch(`http://localhost:3000/${login.toLocaleLowerCase()}/${id}`, {
             method: 'DELETE'
         })
@@ -74,6 +79,7 @@ export const deleteContact = ({id, login}:DeleteActionType) => async (dispatch: 
         })
         
     } catch {
+        dispatch({type: END_LOADING})
         toast.warning('Что-то пошло не так')
     }
 }
@@ -85,6 +91,7 @@ export const editContact = ({id, name, number, login}: FullNumberProps) => async
             name, 
             number
         }
+        dispatch({type: START_LOADING})
         await fetch(`http://localhost:3000/${login.toLocaleLowerCase()}/${id}`, {
             method: 'PUT',
             headers: {
@@ -101,6 +108,7 @@ export const editContact = ({id, name, number, login}: FullNumberProps) => async
             payload: data
         })
     } catch {
+        dispatch({type: END_LOADING})
         toast.warning('Что-то пошло не так')
     }
 }
@@ -113,6 +121,7 @@ interface SearchProps {
 export const searchContact = ({search, login}: SearchProps) => async (dispatch: Dispatch<IContactsAction>) => {
     const lowerLogin = login.toLocaleLowerCase()
     try {
+        dispatch({type: START_LOADING})
         const response = await fetch(`http://localhost:3000/${lowerLogin}`)
         const data = await response.json()
 
@@ -138,6 +147,7 @@ export const searchContact = ({search, login}: SearchProps) => async (dispatch: 
 
         
     } catch {
+        dispatch({type: END_LOADING})
         toast.warning('Что-то пошло не так')
     }
 }
