@@ -1,9 +1,7 @@
 import { IUserAction } from "@src/types/user"
 import { Dispatch } from "react"
-import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
-import { AppDispatch } from ".."
-import { SIGNED_USER } from "../types"
+import { EXIT_USER, SIGNED_USER } from "../types"
 
 interface UserObj {
     id: number,
@@ -16,6 +14,12 @@ interface ActionProps {
     password: string | '',
     confirmPassword?: string | '',
     navigation: any //TODO что-то сделать с any
+}
+
+export const exitUser = () => async (dispatch: Dispatch<IUserAction>) => {
+    dispatch({
+        type: EXIT_USER
+    })
 }
 
 export const addNewUser = ({password, confirmPassword, login, navigation}: ActionProps) => async (dispatch: Dispatch<IUserAction>) => {

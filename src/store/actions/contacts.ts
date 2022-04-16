@@ -1,7 +1,6 @@
 import { IContactsAction } from "@src/types/contacts";
 import { Dispatch } from "react";
 import { toast } from "react-toastify";
-import { AppDispatch, RootState } from "..";
 import { ADD_NEW_NUMBER, LOAD_NUMBER } from "../types";
 
 interface NumberType {

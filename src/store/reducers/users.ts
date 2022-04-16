@@ -1,6 +1,6 @@
 import { IUserAction, IUserState } from '@src/types/user';
 import { AnyAction } from 'redux'
-import { SIGNED_USER } from '../types';
+import { EXIT_USER, SIGNED_USER } from '../types';
 
 const initialState: IUserState = {
     id: 0,
@@ -15,6 +15,11 @@ export const usersReducer = (state = initialState, action: IUserAction):IUserSta
                 login: action.payload.login,
                 id: action.payload.id
             };
+        case EXIT_USER:
+            return {
+                id: 0,
+                login: ''
+            }
         default: 
             return state;
     }

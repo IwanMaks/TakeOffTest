@@ -9,6 +9,11 @@
       "login": "IwanMak1",
       "password": "123",
       "id": 2
+    },
+    {
+      "login": "ANZania",
+      "password": "123",
+      "id": 3
     }
   ],
   "iwanmak": [
@@ -36,6 +41,11 @@
       "id": 9168,
       "name": "Софья",
       "number": "333"
+    },
+    {
+      "id": 8920,
+      "name": "Хуй горы",
+      "number": "+7888888"
     }
   ]
 }

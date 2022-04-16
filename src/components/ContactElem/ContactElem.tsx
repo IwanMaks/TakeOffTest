@@ -36,10 +36,10 @@ export const ContactElem = ({name, number, id, setEditId, setContact, setName, s
             
 
             <div className="icons-container">
-                <div className="icon-container" onClick={handleEditClick}>
+                <div className="icon-container edit" onClick={handleEditClick}>
                     <Edit  width="25" />
                 </div>
-                <div className="icon-container" onClick={handleDeleteClick}>
+                <div className="icon-container delete" onClick={handleDeleteClick}>
                     <Delete  width="25" />
                 </div>
             </div>

@@ -3,7 +3,7 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import './AuthPage.sass'
 import { AppInput } from "@src/components/AppInput/AppInput";
-import { useAction, useAppSelector } from "@src/utils/hooks";
+import { useAction } from "@src/utils/hooks";
 
 export const AuthPage = (): JSX.Element => {
   const [authMode, setAuthMode] = React.useState<'signin' | 'signup'>('signin')

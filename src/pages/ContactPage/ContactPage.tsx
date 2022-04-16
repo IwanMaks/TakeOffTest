@@ -9,6 +9,7 @@ import Close from '@public/close.svg'
 import { AppInput } from "@src/components/AppInput/AppInput";
 import classNames from "classnames";
 import { ContactType } from "./ContactPage.props";
+import { toast } from "react-toastify";
 
 export const ContactPage = (): JSX.Element => {
     const contactData = useAppSelector(state => state.contacts)
@@ -27,12 +28,18 @@ export const ContactPage = (): JSX.Element => {
     }, [])
 
     const handleConfirmButtonClick = (e:React.MouseEvent) => {
-        if (editId) {
-            editContact({id: editId, name, number:contact, login})
+        if (!name) {
+            toast.warning('Имя не может быть пустым')
+        } else if (!contact) {
+            toast.warning('Номер не может быть пустым')
         } else {
-            addContact({id:Math.floor(Math.random()*10000), name, number:contact, login})
+            if (editId) {
+                editContact({id: editId, name, number:contact, login})
+            } else {
+                addContact({id:Math.floor(Math.random()*10000), name, number:contact, login})
+            }
+            setOpenModal(false)
         }
-        setOpenModal(false)
     }
     
     const handleModalClick = (e:React.MouseEvent) => {     

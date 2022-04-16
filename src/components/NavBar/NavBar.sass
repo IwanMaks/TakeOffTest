@@ -20,10 +20,32 @@
     outline: none
     font-size: 18px
     background-color: #718096
+    color:#E2E8F0
     margin-right: 10px
-    :focus
+    &::placeholder
+        color:#E2E8F0
+    &:focus
         border: none
         outline: none
 
+.search-icon
+    cursor: pointer
+
 .input-wrap
     display: flex
+
+.exit-button-wrap
+    position: absolute
+    top: 10px
+    right: 10px
+    padding: 10px 12px
+    background-color: #F56565
+    border-radius: 15px
+    display: flex
+    align-items: center
+    justify-content: center
+    cursor: pointer
+    transition: all 600ms
+    &:hover
+        background-color: #E53E3E
+        transition: all 600ms
