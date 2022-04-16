@@ -7,7 +7,6 @@ export const contactsReducer = (state = initialState, action: IContactsAction):A
     switch (action.type) {
         case LOAD_NUMBER:
             return [
-                ...state,
                 ...action.payload
             ]
         case ADD_NEW_NUMBER:
