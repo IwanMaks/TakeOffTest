@@ -11,10 +11,17 @@ import Edit from '../../../public/edit.svg';
 import { ContactType } from "./ContactElem.props";
 import { useAction } from "@utils/hooks";
 
-export const ContactElem = ({name, number, id}: ContactType):JSX.Element => {
+export const ContactElem = ({name, number, id, setEditId, setContact, setName, setOpenModal}: ContactType):JSX.Element => {
     const {deleteContact} = useAction()
     const handleDeleteClick = () => {        
         deleteContact({id, login:localStorage.getItem('contact-login')})
+    }
+
+    const handleEditClick = () => {
+        setOpenModal(true)
+        setName(name)
+        setContact(number)
+        setEditId(id)
     }
 
     return (
@@ -29,7 +36,7 @@ export const ContactElem = ({name, number, id}: ContactType):JSX.Element => {
             
 
             <div className="icons-container">
-                <div className="icon-container">
+                <div className="icon-container" onClick={handleEditClick}>
                     <Edit  width="25" />
                 </div>
                 <div className="icon-container" onClick={handleDeleteClick}>

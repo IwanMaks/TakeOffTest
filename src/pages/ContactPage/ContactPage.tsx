@@ -1,15 +1,11 @@
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AddNumberButton } from "../../components/AddNumberButton/AddNumberButton";
-import { AppButton } from "../../components/AppButton/AppButton";
-import { ContactElem } from "../../components/ContactElem/ContactElem";
-import { NavBar } from "../../components/NavBar/NavBar";
-import { useAction, useAppSelector } from "../../utils/hooks";
-import { RootState } from "../../store";
-import { loadContacts } from "../../store/actions/contacts";
+import { AppButton } from "@components/AppButton/AppButton";
+import { ContactElem } from "@components/ContactElem/ContactElem";
+import { NavBar } from "@components/NavBar/NavBar";
+import { useAction, useAppSelector } from "@utils/hooks";
 import './ContactPage.sass'
 // @ts-expect-error
-import Close from '../../../public/close.svg'
+import Close from '@public/close.svg'
 import { AppInput } from "@src/components/AppInput/AppInput";
 import classNames from "classnames";
 import { ContactType } from "./ContactPage.props";
@@ -17,10 +13,11 @@ import { ContactType } from "./ContactPage.props";
 export const ContactPage = (): JSX.Element => {
     const contactData = useAppSelector(state => state.contacts)
     const login = useAppSelector(state => state.users.login) || localStorage.getItem('contact-login')
-    const {loadContacts, addContact} = useAction()
+    const {loadContacts, addContact, editContact} = useAction()
 
     const [name, setName] = React.useState<string>('')
     const [contact, setContact] = React.useState<string>('')
+    const [editId, setEditId] = React.useState<number>(0)
     const [openModal, setOpenModal] = React.useState<boolean>(false)
 
     const overlay = React.useRef(null)
@@ -30,11 +27,17 @@ export const ContactPage = (): JSX.Element => {
     }, [])
 
     const handleConfirmButtonClick = (e:React.MouseEvent) => {
-        addContact({id:Math.floor(Math.random()*10000), name, number:contact, login})
+        if (editId) {
+            editContact({id: editId, name, number:contact, login})
+        } else {
+            addContact({id:Math.floor(Math.random()*10000), name, number:contact, login})
+        }
         setOpenModal(false)
     }
     
-    const handleModalClick = (e:React.MouseEvent) => {        
+    const handleModalClick = (e:React.MouseEvent) => {     
+        setContact('')
+        setName('')   
         if (openModal) {
             setOpenModal(false)
         } else {
@@ -78,11 +81,12 @@ export const ContactPage = (): JSX.Element => {
                     <AppButton text="Принять" onClick={handleConfirmButtonClick}/>
                 </div>
             </div>
+            
             <NavBar />
             <div className="contact-elem-wraper">
                 {
                     contactData ?
-                    contactData.map((elem:ContactType, index:number) => <ContactElem id={elem.id} name={elem.name} number={elem.number} key={Math.random()*100 + index} />) :
+                    contactData.map((elem:ContactType, index:number) => <ContactElem setEditId={setEditId} setName={setName} setOpenModal={setOpenModal} setContact={setContact} id={elem.id} name={elem.name} number={elem.number} key={Math.random()*100 + index} />) :
                     <div/>
                 }
                 <AppButton text="+" className="add-number-wrapper" onClick={handleModalClick} />

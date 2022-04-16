@@ -7,14 +7,14 @@ import { ADD_NEW_NUMBER, LOAD_NUMBER } from "../types";
 interface NumberType {
     name: string,
     number: string,
-    id: number,
+    id?: number,
 }
 
 interface loginType {
     login: string
 }
 
-type AddNumberProps = NumberType & loginType
+type FullNumberProps = NumberType & loginType
 
 interface DeleteActionType {
     id:number,
@@ -34,11 +34,9 @@ export const loadContacts = ({login}: {login: string}) => async (dispatch: Dispa
     } catch {
         toast.warning('Что-то пошло не так')
     }
-    
-    
 }
 
-export const addContact = ({id, name, number, login}: AddNumberProps) => async (dispatch: Dispatch<IContactsAction>) => {
+export const addContact = ({id, name, number, login}: FullNumberProps) => async (dispatch: Dispatch<IContactsAction>) => {
     const newNumber = {
         id,
         name,
@@ -75,6 +73,70 @@ export const deleteContact = ({id, login}:DeleteActionType) => async (dispatch: 
             type: LOAD_NUMBER,
             payload: data
         })
+        
+    } catch {
+        toast.warning('Что-то пошло не так')
+    }
+}
+
+export const editContact = ({id, name, number, login}: FullNumberProps) => async (dispatch: Dispatch<IContactsAction>) => {
+    try {
+        const newNumber = {
+            id,
+            name, 
+            number
+        }
+        await fetch(`http://localhost:3000/${login.toLocaleLowerCase()}/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newNumber)
+        })
+        
+        const response = await fetch(`http://localhost:3000/${login.toLocaleLowerCase()}`)
+        const data = await response.json()
+
+        dispatch({
+            type: LOAD_NUMBER,
+            payload: data
+        })
+    } catch {
+        toast.warning('Что-то пошло не так')
+    }
+}
+
+interface SearchProps {
+    search: string,
+    login: string
+}
+
+export const searchContact = ({search, login}: SearchProps) => async (dispatch: Dispatch<IContactsAction>) => {
+    const lowerLogin = login.toLocaleLowerCase()
+    try {
+        const response = await fetch(`http://localhost:3000/${lowerLogin}`)
+        const data = await response.json()
+
+        if (search.trim()) {
+            const filterData = data.filter((elem:NumberType, index:number) => {
+                if (elem.name.includes(search.trim()) || elem.number.includes(search.trim())) {
+                    return true
+                } else {
+                    return false
+                }
+            })
+            dispatch({
+                type: LOAD_NUMBER,
+                payload: filterData
+            })
+        } else {
+            dispatch({
+                type: LOAD_NUMBER,
+                payload: data
+            })
+        }
+        
+
         
     } catch {
         toast.warning('Что-то пошло не так')
