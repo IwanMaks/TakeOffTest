@@ -53,8 +53,6 @@ export const ContactPage = (): JSX.Element => {
         }
     }
 
-    console.log(contactData);
-
     return (
         <div className="contact-container">
             <div 
