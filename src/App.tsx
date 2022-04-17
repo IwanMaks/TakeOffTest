@@ -11,7 +11,6 @@ import { ContactPage } from './pages/ContactPage/ContactPage';
 import { PrivateRoutes } from './components/PrivateRoutes';
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { ChakraProvider } from '@chakra-ui/react'
 
 export const App = (): JSX.Element => {
     return (
