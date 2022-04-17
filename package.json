@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open --hot",
-    "start_server": "json-server --watch users.json",
+    "start": "concurrently --kill-others \"npm run server\" \"npm run client\"",
+    "client": "webpack-dev-server --mode development --open --hot",
+    "server": "json-server --watch users.json",
     "build": "webpack --mode production"
   },
   "author": "Iwan Maksakov <iwanmaksackov@yandex.ru>",
@@ -33,6 +34,7 @@
   },
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",
+    "concurrently": "^7.1.0",
     "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.1",
