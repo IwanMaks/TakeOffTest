@@ -1,7 +1,8 @@
 export interface contactState {
     id: number,
     name: string,
-    number: string
+    number: string,
+    login: string
 }
 
 export interface FullContactState {

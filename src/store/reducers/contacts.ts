@@ -21,7 +21,8 @@ export const contactsReducer = (state = initialState, action: IContactsAction):F
                     {   
                         number: action.payload[0].number,
                         name: action.payload[0].name,
-                        id: state.contactsData.length + 1
+                        id: action.payload[0].id,
+                        login: action.payload[0].login
                     }
                 ]
             }

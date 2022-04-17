@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 
 export interface IAppInputProps {
-    type: 'text' | 'password',
+    type: 'text' | 'password' | 'tel',
     placeholder: string,
     id: string,
     label: string,

@@ -4,28 +4,26 @@
       "id": 1,
       "login": "IwanMak",
       "password": "qwerty"
-    },
-    {
-      "login": "IwanMak1",
-      "password": "123",
-      "id": 2
-    },
-    {
-      "login": "ANZania",
-      "password": "123",
-      "id": 3
     }
   ],
-  "iwanmak": [
+  "contacts": [
     {
-      "id": 3728,
-      "name": "Настя",
-      "number": "+7888888"
+      "id": 3286,
+      "name": "Хуй горы",
+      "number": "+7888888",
+      "login": "iwanmak"
     },
     {
-      "id": 2475,
-      "name": "Иван",
-      "number": "+79207534823"
+      "id": 4127,
+      "name": "Ива",
+      "number": "8888",
+      "login": "iwanmak"
+    },
+    {
+      "id": 2480,
+      "name": "Анастасия Александровна Зиброваfsdsd",
+      "number": "+79107534723",
+      "login": "iwanmak"
     }
   ]
 }

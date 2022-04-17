@@ -5,6 +5,8 @@ import './AuthPage.sass'
 import { AppInput } from "@src/components/AppInput/AppInput";
 import { useAction, useAppSelector } from "@src/utils/hooks";
 import { AppLoading } from "@src/components/AppLoading/AppLoading";
+import { toast } from "react-toastify";
+
 
 export const AuthPage = (): JSX.Element => {
   const [authMode, setAuthMode] = React.useState<'signin' | 'signup'>('signin')
@@ -41,6 +43,14 @@ export const AuthPage = (): JSX.Element => {
       addNewUser({password, confirmPassword, login, navigation})
     }
   }
+
+  const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.trim().split(' ').length > 1) {
+      toast.warning('Логин не может сожержать больше одного слова')
+    } else {
+      setLogin(e.target.value.trim())
+    }
+  }
   
   return (
     <div className="popup-wrap">
@@ -50,15 +60,15 @@ export const AuthPage = (): JSX.Element => {
       </div>
 
       <form className={classNames("auth-form", {signupForm: authMode === 'signup'})} autoComplete="off">
-          <h3 className="auth-title">Авторизация</h3>
+          <h3 className="auth-title">{authMode === 'signin' ? 'Авторизация' : 'Регистрация'}</h3>
 
           <AppInput 
             type="text" 
-            placeholder="Телефон или почта" 
+            placeholder="Логин" 
             id="username" 
             label="Логин"
             value={login} 
-            onChange={(e) => setLogin(e.target.value)}
+            onChange={handleLoginChange}
           />
 
           <AppInput  
@@ -67,7 +77,7 @@ export const AuthPage = (): JSX.Element => {
             placeholder="Пароль" 
             id="password" 
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value.trim())}
           />
 
           {
@@ -78,7 +88,7 @@ export const AuthPage = (): JSX.Element => {
               label="Повторите пароль"
               id="confirmPassword"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)} 
+              onChange={(e) => setConfirmPassword(e.target.value.trim())} 
             />
             
           }
@@ -86,7 +96,7 @@ export const AuthPage = (): JSX.Element => {
           <button 
             className="auth-button"
             onClick={handleAuthClick}
-            disabled={!login || !password}
+            disabled={authMode === 'signin' ? (!login || !password) : (!login || !password || !confirmPassword)}
           >
             {
               loading ?

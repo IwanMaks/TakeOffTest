@@ -1,19 +1,15 @@
 import * as React from "react";
 import './ContactElem.sass';
 
-//TODO решить проблему с иконками
-// @ts-expect-error
-import Avatar from '../../../public/avatar.svg';
-// @ts-expect-error
-import Delete from '../../../public/delete.svg';
-// @ts-expect-error
-import Edit from '../../../public/edit.svg';
 import { ContactType } from "./ContactElem.props";
 import { useAction } from "@utils/hooks";
+import { FaUserAlt } from 'react-icons/fa'
+import { AiFillEdit, AiFillDelete } from 'react-icons/ai'
 
 export const ContactElem = ({name, number, id, setEditId, setContact, setName, setOpenModal}: ContactType):JSX.Element => {
     const {deleteContact} = useAction()
-    const handleDeleteClick = () => {        
+
+    const handleDeleteClick = () => { 
         deleteContact({id, login:localStorage.getItem('contact-login')})
     }
 
@@ -27,7 +23,7 @@ export const ContactElem = ({name, number, id, setEditId, setContact, setName, s
     return (
         <div className="contact-elem-container">
             <div className="info-container">
-                <Avatar width="50" color="#fffff" />
+                <FaUserAlt className="icon-avatar"/>
                 <div className="name-number-container">
                     <div className="name">{name}</div>
                     <div className="number">{number}</div>
@@ -37,10 +33,10 @@ export const ContactElem = ({name, number, id, setEditId, setContact, setName, s
 
             <div className="icons-container">
                 <div className="icon-container edit" onClick={handleEditClick}>
-                    <Edit  width="25" />
+                    <AiFillEdit fontSize="20px"/>
                 </div>
                 <div className="icon-container delete" onClick={handleDeleteClick}>
-                    <Delete  width="25" />
+                    <AiFillDelete fontSize="20px"/>
                 </div>
             </div>
         </div>

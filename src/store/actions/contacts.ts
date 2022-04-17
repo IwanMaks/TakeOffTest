@@ -24,7 +24,7 @@ export const loadContacts = ({login}: {login: string}) => async (dispatch: Dispa
     const lowerLogin = login.toLocaleLowerCase()
     try {
         dispatch({type: START_LOADING})
-        const response = await fetch(`http://localhost:3000/${lowerLogin}`)
+        const response = await fetch(`http://localhost:3000/contacts?login=${lowerLogin}`)
         const data = await response.json()
 
         dispatch({
@@ -38,15 +38,17 @@ export const loadContacts = ({login}: {login: string}) => async (dispatch: Dispa
 }
 
 export const addContact = ({id, name, number, login}: FullNumberProps) => async (dispatch: Dispatch<IContactsAction>) => {
+    const lowerLogin = login.toLocaleLowerCase()
     const newNumber = {
         id,
         name,
-        number
+        number,
+        login: lowerLogin
     }
-    const lowerLogin = login.toLocaleLowerCase()
+    
     try {
         dispatch({type: START_LOADING})
-        await fetch(`http://localhost:3000/${lowerLogin}`, {
+        await fetch(`http://localhost:3000/contacts?login=${lowerLogin}`, {
             method: 'POST',
             body: JSON.stringify(newNumber),
             headers: {
@@ -65,12 +67,13 @@ export const addContact = ({id, name, number, login}: FullNumberProps) => async 
 
 export const deleteContact = ({id, login}:DeleteActionType) => async (dispatch: Dispatch<IContactsAction>) => {    
     try {
+        
         dispatch({type: START_LOADING})
-        await fetch(`http://localhost:3000/${login.toLocaleLowerCase()}/${id}`, {
+        await fetch(`http://localhost:3000/contacts/${id}`, {
             method: 'DELETE'
         })
         
-        const response = await fetch(`http://localhost:3000/${login.toLocaleLowerCase()}`)
+        const response = await fetch(`http://localhost:3000/contacts?login=${login.toLocaleLowerCase()}`)
         const data = await response.json()
 
         dispatch({
@@ -89,10 +92,11 @@ export const editContact = ({id, name, number, login}: FullNumberProps) => async
         const newNumber = {
             id,
             name, 
-            number
+            number,
+            login: login.toLocaleLowerCase()
         }
         dispatch({type: START_LOADING})
-        await fetch(`http://localhost:3000/${login.toLocaleLowerCase()}/${id}`, {
+        await fetch(`http://localhost:3000/contacts/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -100,7 +104,7 @@ export const editContact = ({id, name, number, login}: FullNumberProps) => async
             body: JSON.stringify(newNumber)
         })
         
-        const response = await fetch(`http://localhost:3000/${login.toLocaleLowerCase()}`)
+        const response = await fetch(`http://localhost:3000/contacts?login=${login.toLocaleLowerCase()}`)
         const data = await response.json()
 
         dispatch({
@@ -122,12 +126,12 @@ export const searchContact = ({search, login}: SearchProps) => async (dispatch: 
     const lowerLogin = login.toLocaleLowerCase()
     try {
         dispatch({type: START_LOADING})
-        const response = await fetch(`http://localhost:3000/${lowerLogin}`)
+        const response = await fetch(`http://localhost:3000/contacts?login=${lowerLogin}`)
         const data = await response.json()
 
         if (search.trim()) {
             const filterData = data.filter((elem:NumberType, index:number) => {
-                if (elem.name.includes(search.trim()) || elem.number.includes(search.trim())) {
+                if (elem.name.toLocaleLowerCase().includes(search.trim().toLocaleLowerCase()) || elem.number.includes(search.trim())) {
                     return true
                 } else {
                     return false

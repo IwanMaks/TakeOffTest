@@ -14,7 +14,7 @@ interface ActionProps {
     login: string | '',
     password: string | '',
     confirmPassword?: string | '',
-    navigation: any //TODO что-то сделать с any
+    navigation: Function
 }
 
 export const exitUser = () => (dispatch: Dispatch<IUserAction>) => {

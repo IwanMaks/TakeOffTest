@@ -4,13 +4,12 @@ import { ContactElem } from "@components/ContactElem/ContactElem";
 import { NavBar } from "@components/NavBar/NavBar";
 import { useAction, useAppSelector } from "@utils/hooks";
 import './ContactPage.sass'
-// @ts-expect-error
-import Close from '@public/close.svg'
 import { AppInput } from "@components/AppInput/AppInput";
 import classNames from "classnames";
 import { ContactType } from "./ContactPage.props";
 import { toast } from "react-toastify";
 import { AppLoading } from "@components/AppLoading/AppLoading";
+import { IoIosClose } from "react-icons/io"
 
 export const ContactPage = (): JSX.Element => {
     const contactData = useAppSelector(state => state.contacts.contactsData)
@@ -54,6 +53,8 @@ export const ContactPage = (): JSX.Element => {
         }
     }
 
+    console.log(contactData);
+
     return (
         <div className="contact-container">
             <div 
@@ -67,9 +68,9 @@ export const ContactPage = (): JSX.Element => {
             >
                 <div className="modal-container">
                     <div className="close-wrapper">
-                        <h2 className="header-modal">Введите данные контакта</h2>
+                        <div className="header-modal">Введите данные контакта</div>
                         <div className="icon-close-container" onClick={handleModalClick}>
-                            <Close width="30" />
+                            <IoIosClose className="close-icon" />
                         </div>
                     </div>
                     <AppInput 
@@ -82,7 +83,7 @@ export const ContactPage = (): JSX.Element => {
                     />
                     <AppInput 
                         placeholder="Телефон" 
-                        type="text"
+                        type="tel"
                         id="contact"
                         label="Номер контакта"
                         value={contact}
@@ -97,8 +98,8 @@ export const ContactPage = (): JSX.Element => {
                 {
                     loading ?
                     <AppLoading /> :
-                    contactData ?
-                    contactData.map((elem:ContactType, index:number) => <ContactElem setEditId={setEditId} setName={setName} setOpenModal={setOpenModal} setContact={setContact} id={elem.id} name={elem.name} number={elem.number} key={Math.random()*100 + index} />) :
+                    contactData.length ?
+                    contactData.map((elem:ContactType, index:number) => <ContactElem setEditId={setEditId} setName={setName} setOpenModal={setOpenModal} setContact={setContact} id={elem.id} name={elem.name} number={elem.number} key={Math.random()*10000 + index} />) :
                     <div className="empty-contact">
                         Введите свой первый контакт, нажав на кнопку ниже
                     </div>
